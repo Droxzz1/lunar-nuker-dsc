@@ -1,0 +1,23 @@
+make sure to install asyncio by typing "pip install asyncio" in cmd.
+make sure install discord.py by typing "pip install discord.py" in cmd.
+MAKE SURE U HAVE PYTHON.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--lunar nuker
