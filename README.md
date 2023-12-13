@@ -1,6 +1,6 @@
 # lunar-nuker-dsc
 
-
+![asddfsdsfdfsfds](https://github.com/Droxzz1/lunar-nuker-dsc/assets/104304329/fc607a60-d163-4e1b-badf-11534b5ddb0e)
 
 In order to make this work you must have python installed obviously.
 
@@ -15,3 +15,4 @@ Then type "py bot.py" and press enter
 Then go to the server ur nuking and and type !setup anywhere.
 
 Obviously make sure the bot u made is in their server!
+
