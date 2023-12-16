@@ -6,7 +6,10 @@ In order to make this work you must have python installed obviously.
 
 Check the requieremnts.txt file to know what to install and thats it!
 
+
 Make sure your bot is in the victim's server.
+
+then run setup.py
 
 Then go ahead and type in any chennel this: "!setup YOUR-SERVER-ID 5 test-channel YOUR-MESSAGE"
 
