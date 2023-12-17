@@ -1,9 +1,15 @@
 import discord
 from discord.ext import commands
 import asyncio
+import json
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='!', intents=intents)
+
+# Load bot token from config.json
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
+    BOT_TOKEN = config.get('token', '')
 
 @bot.event
 async def on_ready():
@@ -44,4 +50,4 @@ async def create_channel_and_messages(ctx, guild, channel_name, message_content,
     for _ in range(num_messages):
         await channel.send(message_content)
 
-bot.run('YOUR-BOT-TOKEN')
+bot.run(BOT_TOKEN)
